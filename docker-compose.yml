@@ -1,28 +1,25 @@
 version: '3'
 
 services:
-  vsftpd:
+  app:
     image: fauria/vsftpd
-    container_name: vsftpd
     restart: always
     ports:
       - "20:20"
       - "21:21"
       - "21100-21110:21100-21110"
     environment:
-      - FTP_USER=myuser
-      - FTP_PASS=mypass
-      - SSL_ENABLE=YES
-      - TLS_CERT=ftps_localhost.crt
-      - TLS_KEY=ftps_localhost.key
-      - PASV_ADDRESS=45.174.216.22
-      - PASV_MIN_PORT=21100
-      - PASV_MAX_PORT=21110
+      - FTP_USER=${FTP_USER}
+      - FTP_PASS=${FTP_PASS}
+      - SSL_ENABLE=${SSL_ENABLE}
+      - TLS_CERT=${TLS_CERT}
+      - TLS_KEY=${TLS_KEY}
+      - PASV_ADDRESS=${PASV_ADDRESS}
+      - PASV_MIN_PORT=${PASV_MIN_PORT}
+      - PASV_MAX_PORT=${PASV_MAX_PORT}
     volumes:
       - ./volume/ftp-data:/home/vsftpd
       - ./volume/logs:/var/log/vsftpd
-
-
     networks:
       nginx_network:
         ipv4_address: 10.0.2.52
